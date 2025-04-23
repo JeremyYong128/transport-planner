@@ -9,9 +9,7 @@ from atomic_agents.lib.components.agent_memory import AgentMemory
 from atomic_agents.agents.base_agent import BaseAgent, BaseAgentConfig, BaseAgentInputSchema, BaseAgentOutputSchema
 
 # Load environment variables from a .env file
-
-# Initialize dotenv to load variables
-dotenv.load_dotenv()
+dotenv.load_dotenv(os.path.join(os.path.dirname(__file__), "../.env"))
 
 # API Key setup
 API_KEY = ""
