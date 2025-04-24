@@ -68,12 +68,9 @@ requirements_generator_agent = BaseAgent(
                 "Analyse the user input.",
                 "Use any necessary tools if it helps to generated a more refined output.",
                 "Translate the user requirements from text input to a structured format.",
-                "Validate the structured output against the output schema. If they do not match, change the structure until they do.",
             ],
             output_instructions=[
-                "The output should be a contain 1 field: user_requirements.",
-                "The user_requirements field should be a dictionary containing the user's travel requirements.",
-                "Ensure the output type is a dictionary.",
+                "The output should match the user's travel requirements.",
             ],
         ),
         input_schema=RequirementsGeneratorInputSchema,
