@@ -19,7 +19,8 @@ class UserRequirementsSchema(BaseIOSchema):
 
     destination: str = Field(..., description="The destination of the user's travel.")
     departure_date: str = Field(
-        ..., description="The date of the user's travel in YYYY-MM-DD format."
+        ...,
+        description="The date of the user's travel in YYYY-MM-DD format.",
     )
     departure_time: str = Field(
         ...,
@@ -31,7 +32,8 @@ class RequirementsGeneratorInputSchema(BaseIOSchema):
     """Input schema for the Requirements Generator Agent. Contains the user's message to be processed."""
 
     chat_message: str = Field(
-        ..., description="The user's input message to be analysed and responded to."
+        ...,
+        description="The user's input message to be analysed and responded to.",
     )
 
 
@@ -102,7 +104,6 @@ requirements_generator_agent.register_context_provider(
 # EXAMPLE USAGE #
 #################
 if __name__ == "__main__":
-    import os
     from dotenv import load_dotenv
     from rich.console import Console
     from rich.panel import Panel
@@ -111,7 +112,7 @@ if __name__ == "__main__":
     load_dotenv()
 
     # Set up the OpenAI client
-    client = instructor.from_openai(openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY")))
+    client = instructor.from_openai(openai.OpenAI())
 
     # Initialize Rich console
     console = Console()
