@@ -12,6 +12,14 @@ import typing
 ########################
 # INPUT/OUTPUT SCHEMAS #
 ########################
+class UserRequirementsSchema(BaseIOSchema):
+    """Schema for the user requirements."""
+
+    destination: str = Field(..., description="The destination of the user's travel.")
+    departure_date: str = Field(..., description="The date of the user's travel in YYYY-MM-DD format.")
+    departure_time: str = Field(..., description="The time of the user's travel, either in HH:MM format or a textual description.")
+
+
 class RequirementsGeneratorInputSchema(BaseIOSchema):
     """Input schema for the Requirements Generator Agent. Contains the user's message to be processed."""
 
@@ -21,8 +29,7 @@ class RequirementsGeneratorInputSchema(BaseIOSchema):
 class RequirementsGeneratorOutputSchema(BaseIOSchema):
     """Output schema for the Requirements Generator Agent. Contains the a structured representation of the user's travel requirements."""
 
-    test_response: str = Field(..., description="A test response to check the output schema.")
-    user_requirements: dict = Field(..., description="A dictionary containing the user's travel requirements. It should have at least one key-value pair.")
+    user_requirements: UserRequirementsSchema = Field(..., description="A dictionary containing the user's travel requirements. It should have at least 1 key-value pair.")
 
 
 #######################
@@ -57,12 +64,16 @@ requirements_generator_agent = BaseAgent(
             background=[
                 "You are a Requirements Generator that generates a set of requirements for the user's travel plans based on the user input.",
             ],
+            steps=[
+                "Analyse the user input.",
+                "Use any necessary tools if it helps to generated a more refined output.",
+                "Translate the user requirements from text input to a structured format.",
+                "Validate the structured output against the output schema. If they do not match, change the structure until they do.",
+            ],
             output_instructions=[
-                "Analyse the user input and provide an output which captures the information provided.",
-                "You can use the available tools and context providers to assist you in generating the requirements.",
-                "The output should be a contain 2 fields: test_response and user_requirements.",
-                "test_response should be a string that is a test response to check the output schema.",
-                "user_requirements should be a dictionary containing the user's travel requirements. It should have at least one key-value pair.",
+                "The output should be a contain 1 field: user_requirements.",
+                "The user_requirements field should be a dictionary containing the user's travel requirements.",
+                "Ensure the output type is a dictionary.",
             ],
         ),
         input_schema=RequirementsGeneratorInputSchema,
